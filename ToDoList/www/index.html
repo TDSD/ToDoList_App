@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <link rel="stylesheet" href="lib/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="css/index.css">
+        <script src="js/index.js"></script>
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/jquery.mobile-1.4.5.min.js"></script>
+        <title>ToDoList App</title>
+    </head>
+    <body>
+        <div data-role="page">
+            <div data-role="header">
+                <h1>ToDoList App</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <label for="task">Ajouter une tache</label>
+                <input type="text" id="task">
+                <input type="button" value="Ajouter" onclick="addTask()">
+                <input type="button" value="Reinitialiser" onclick="reinitialiser()">
+                <ul id="taskList" data-role="listview" data-inset="true">
+                    <li id="1">Tâche 1
+                        <button class="ui-btn ui-btn-inline btnarchive" style="background: green ; color: white;">Archiver</button>
+                    </li>
+                    <li id="2">Tâche 2
+                        <button class="ui-btn ui-btn-inline btnarchive" style="background: green ; color: white;">Archiver</button>
+                    </li>
+                    <li id="3">Tâche 3
+                        <button class="ui-btn ui-btn-inline btnarchive" style="background: green ; color: white;">Archiver</button>
+                    </li>
+                    <li id="4">Tâche 4
+                        <button class="ui-btn ui-btn-inline btnarchive" style="background: green ; color: white;">Archiver</button>
+                    </li>
+                    <script>
+                        let archivetask = document.querySelectorAll(".btnarchive");
+                        for(let j=0; j<archivetask.length; j++){
+                            archivetask[j].onclick = function(){
+                                let texte = this.parentElement.innerText;
+                                taskListArch.innerHTML += '<li class="archivetache">'+texte.split('Archiver')+'</li>';
+                                $(taskListArch).listview('refresh');
+                                archivetask[j].parentElement.remove();
+                            }
+                        }
+                    </script>
+                </ul>
+                <h4>Tâches archivées</h4>
+                <ul id="taskListArch" data-role="listview" data-inset="true" >
+                    <li class="archivetache">Tâche 5</li>
+                    <li class="archivetache">Tâche 6</li>
+                </ul>
+                <script>
+                    $(function(){
+                        $( document ).on( "swipeleft","#taskList li",swipeleftHandler );
+                        function swipeleftHandler( event ){
+                             //$( event.target ).addClass( "swipe" );
+                             //$( this).addClass( "swipe" );
+                             $( this).toggleClass( "swipe" );
+                        }
+                        $( document ).on( "swiperight","#taskList li",swiperightHandler );
+                        function swiperightHandler( event ){
+                             //$( event.target ).addClass( "swipe" );
+                             //$( this).addClass( "swipe" );
+                             $(this).hide('slow', function(){
+                                $(this).remove();
+                             })
+                             // $( this).remove();
+                        }
+                    });
+                </script>
+            </div>
+            <div role="footer" data-position="fixed">
+                <h5>M1IABD &copy; Octobre 2022</h5>
+            </div>
+        </div>
+    </body>
+</html>
